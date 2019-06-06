@@ -31,7 +31,9 @@ set_color_vars ()
 
 show_startup_banner ()
 {
+    sleep 1
     echo -e "$ylw show_startup_banner $rstclr"
+    sleep 1
     echo -e "$bckgd_lghwht $blk ------------------------------------------ $rstclr"
     echo -e "$bckgd_ylw $blk Running 1.sh                               $rstclr"
     echo -e "$bckgd_lghwht $blk ------------------------------------------ $rstclr"
@@ -50,6 +52,7 @@ do_the_work()
 sudo su <<HEREDOC
 echo "vagrant  ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 HEREDOC
+    $done
     
     echo -e "$cyn apt-get update $rstclr"
     sleep 1
