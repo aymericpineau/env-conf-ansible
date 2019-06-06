@@ -33,12 +33,14 @@ show_startup_banner ()
 {
     echo -e "$ylw show_startup_banner $rstclr"
     echo -e "$bckgd_lghwht $blk ------------------------------------------ $rstclr"
-    echo -e "$bckgd_ylw $blk Running 1.sh                                  $rstclr"
+    echo -e "$bckgd_ylw $blk Running 1.sh                               $rstclr"
     echo -e "$bckgd_lghwht $blk ------------------------------------------ $rstclr"
 }
 
 do_the_work()
 {
+    echo -e "$ylw do_the_work $rstclr"
+    
     echo -e "$cyn sed -i 's/1/0/g' /etc/apt/apt.conf.d/20auto-upgrades $rstclr"
     sleep 1
     sed -i 's/1/0/g' /etc/apt/apt.conf.d/20auto-upgrades
