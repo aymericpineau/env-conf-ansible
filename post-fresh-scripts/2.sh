@@ -33,7 +33,7 @@ show_startup_banner ()
 {
     echo -e "$ylw show_startup_banner $rstclr"
     echo -e "$bckgd_lghwht $blk ------------------------------------------ $rstclr"
-    echo -e "$bckgd_ylw $blk Running 1.sh                               $rstclr"
+    echo -e "$bckgd_ylw $blk Running 2.sh                               $rstclr"
     echo -e "$bckgd_lghwht $blk ------------------------------------------ $rstclr"
 }
 
