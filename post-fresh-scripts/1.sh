@@ -39,7 +39,7 @@ show_startup_banner ()
     echo -e "$bckgd_lghwht $blk ------------------------------------------ $rstclr"
 }
 
-do_the_work()
+do_the_work ()
 {
     echo -e "$ylw do_the_work $rstclr"
     

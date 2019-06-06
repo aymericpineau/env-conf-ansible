@@ -31,7 +31,9 @@ set_color_vars ()
 
 show_startup_banner ()
 {
+    sleep 1
     echo -e "$ylw show_startup_banner $rstclr"
+    sleep 1
     echo -e "$bckgd_lghwht $blk ------------------------------------------ $rstclr"
     echo -e "$bckgd_ylw $blk Running 2.sh                               $rstclr"
     echo -e "$bckgd_lghwht $blk ------------------------------------------ $rstclr"
