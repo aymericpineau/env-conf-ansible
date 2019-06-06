@@ -1,8 +1,7 @@
 #!/bin/bash
 
 # https://www.vagrantup.com/docs/boxes/base.html#default-user-settings
-# Prerequisites: install lubuntu (user: vagrant / pwd: vagrant)
-
+# Prerequisites: install ubuntu-server (user: vagrant / pwd: vagrant)
 
 startup ()
 {
