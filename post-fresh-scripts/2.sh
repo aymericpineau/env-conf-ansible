@@ -3,6 +3,7 @@
 # https://www.vagrantup.com/docs/boxes/base.html#default-user-settings
 # Prerequisites: install lubuntu (user: vagrant / pwd: vagrant)
 
+
 startup ()
 {
     set_color_vars;
