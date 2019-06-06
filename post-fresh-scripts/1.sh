@@ -3,7 +3,7 @@
 # https://www.vagrantup.com/docs/boxes/base.html#default-user-settings
 # Prerequisites: install ubuntu-server (user: vagrant / pwd: vagrant)
 
-startup()
+startup ()
 {
     set_color_vars;
     show_startup_banner;
@@ -44,7 +44,7 @@ do_the_work()
     sed -i 's/1/0/g' /etc/apt/apt.conf.d/20auto-upgrades
     $done
 
-    echo -e "$cyn  $rstclr"
+    echo -e "$cyn add vagrant to /etc/sudoers $rstclr"
 sudo su <<HEREDOC
 echo "vagrant  ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 HEREDOC
@@ -110,3 +110,5 @@ HEREDOC
     $done
     
 }
+
+startup;
