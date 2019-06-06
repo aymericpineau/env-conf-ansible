@@ -58,11 +58,6 @@ HEREDOC
     sleep 1
     apt-get update
     $done
-    
-    echo -e "$cyn apt-get update $rstclr"
-    sleep 1
-    apt-get update
-    $done
 
     echo -e "$cyn apt-get -y upgrade $rstclr"
     sleep 1
