@@ -4,7 +4,8 @@
 3. Run ```1.sh``` (installs: linux-headers, build-essential, dkms, VBoxGuestAdditions). The VM will reboot.
 4. Run ```2.sh``` (installs: vagrant insecure ssh_key. Changes root pwd to ```vagrant``` (user input required))
 5. Run ```apt-get update``` & ```apt-get upgrade``` manually to make sure everythong is up to date.
-5. Poweoff the vm
+6. Poweoff the vm
+
 
 1. On your Windows host, create a new folder like so: C:\Users\roger\VirtualBox VMs\vagrant
 2. Run ```cd C:\Users\roger\VirtualBox VMs\vagrant```
