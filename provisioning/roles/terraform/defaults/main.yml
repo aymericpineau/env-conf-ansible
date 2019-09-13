@@ -1,0 +1,10 @@
+---
+
+legacy_tf: 0.11.14
+latest_tf: 0.12.7
+
+legacy_terraform:
+  url: https://releases.hashicorp.com/terraform/{{ legacy_tf }}/terraform_{{ legacy_tf }}
+
+latest_terraform:
+  url: https://releases.hashicorp.com/terraform/{{ latest_tf }}/terraform_{{ latest_tf }}

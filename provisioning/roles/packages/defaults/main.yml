@@ -1,0 +1,28 @@
+---
+
+packages_apt:
+  - colordiff
+  - curl
+  - emacs-nox
+  - git
+  - htop
+  - jq
+  - lftp
+  - ntpdate
+  - python3
+  - python3-pip
+  - python-pygments
+  - python3-setuptools
+  - tig
+  - unzip
+  - virtualenv
+  - wget
+  - whois
+  - zip
+  - zsh
+  
+packages_pip:
+  - awscli
+  - aws-list-all
+  - boto3
+  - virtualenv

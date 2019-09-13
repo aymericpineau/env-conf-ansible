@@ -1,0 +1,14 @@
+---
+
+- name: Install packages_apt
+  apt:
+    update-cache: yes
+    name: "{{ packages_apt }}"
+    state: present
+
+- name: Install packages_pip --user
+  pip:
+    executable: pip3
+    name: "{{ packages_pip }}"
+    state: latest
+    extra_args: --user

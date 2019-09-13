@@ -1,0 +1,30 @@
+---
+
+- name: Create user "{{ user }}"
+  become: yes
+  user: # https://docs.ansible.com/ansible/latest/modules/user_module.html
+    name: "{{ user }}"
+    password: "{{ user_password | password_hash('sha512') }}"
+    # https://wiki.ubuntu.com/Security/Privileges
+    groups: "adm,sudo,lxd"
+    create_home: yes
+    generate_ssh_key: yes
+    ssh_key_type: rsa
+    ssh_key_file: .ssh/id_rsa
+    ssh_key_bits: 4096
+    ssh_key_comment: "{{ user }}"
+    ssh_key_passphrase: "{{ key_passphrase }}"
+    
+    system: no
+    shell: /bin/bash
+    state: present
+
+- name: create user's ~/bin dir
+  become: yes
+  become_user: "{{ user }}"
+  file:
+    path: /home/{{ user }}/bin
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: "0775"
+    state: directory

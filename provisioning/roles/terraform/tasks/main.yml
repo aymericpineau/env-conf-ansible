@@ -1,0 +1,85 @@
+---
+- name: Get current version of terraform
+  shell: /usr/local/bin/terraform version | cut -d 'v' -f 2
+  register: current_tf
+
+- name: Create temp directory
+  tempfile:
+    state: directory
+    suffix: terraform
+  register: temp_directory
+  when: current_tf.stdout != legacy_tf or current_tf.stdout != latest_tf
+
+#########################################
+# Legacy terraform (default is 0.11.14) #
+#########################################
+- name: TF LEGACY ({{ legacy_tf }})
+  block:
+  - name: TF LEGACY ({{ legacy_tf }}) - Download checksum
+    get_url:
+      dest: "{{ temp_directory.path }}/terraform_{{ legacy_tf }}_SHA256SUMS"
+      url: "{{ legacy_terraform.url }}_SHA256SUMS"
+
+  - name: TF LEGACY ({{ legacy_tf }}) - Get checksum value
+    shell: cat {{ temp_directory.path }}/terraform_{{ legacy_tf }}_SHA256SUMS | grep linux_amd64 | cut -d ' ' -f 1
+    register: checksum
+
+  - name: TF LEGACY ({{ legacy_tf }}) - Download TF
+    get_url:
+      dest: "{{ temp_directory.path }}/terraform_{{ legacy_tf }}_linux_amd64.zip"
+      url: "{{ legacy_terraform.url }}_linux_amd64.zip"
+      checksum: "sha256:{{ checksum.stdout }}"
+
+  - name: TF LEGACY ({{ legacy_tf }}) - Unzip TF
+    unarchive:
+      src: "{{ temp_directory.path }}/terraform_{{ legacy_tf }}_linux_amd64.zip"
+      dest: "{{ temp_directory.path }}"
+      owner: "{{ user }}"
+      mode: "0775"
+      remote_src: yes
+
+  - name: TF LEGACY ({{ legacy_tf }}) - Move 'terraform' to /home/{{ user }}/bin/terraform_{{ legacy_tf }}
+    command: mv {{ temp_directory.path }}/terraform /home/{{ user }}/bin/terraform_{{ legacy_tf }}
+  
+  when: current_tf.stdout != legacy_tf
+
+####################
+# Latest terraform #
+####################
+- name: TF LATEST ({{ latest_tf }})
+  block: 
+  - name: TF LATEST ({{ latest_tf }}) - Download checksum
+    get_url:
+      dest: "{{ temp_directory.path }}/terraform_{{ latest_tf }}_SHA256SUMS"
+      url: "{{ latest_terraform.url }}_SHA256SUMS"
+
+  - name: TF LATEST ({{ latest_tf }}) - Get checksum value
+    shell: cat {{ temp_directory.path }}/terraform_{{ latest_tf }}_SHA256SUMS | grep linux_amd64 | cut -d ' ' -f 1
+    register: checksum
+
+  - name: TF LATEST ({{ latest_tf }}) - Download TF
+    get_url:
+      dest: "{{ temp_directory.path }}/terraform_{{ latest_tf }}_linux_amd64.zip"
+      url: "{{ latest_terraform.url }}_linux_amd64.zip"
+      checksum: "sha256:{{ checksum.stdout }}"
+
+  - name: TF LATEST ({{ latest_tf }}) - Unzip TF
+    unarchive:
+      src: "{{ temp_directory.path }}/terraform_{{ latest_tf }}_linux_amd64.zip"
+      dest: "{{ temp_directory.path }}"
+      owner: "{{ user }}"
+      mode: "0775"
+      remote_src: yes
+
+  - name: TF LATEST ({{ latest_tf }}) - Move 'terraform' to /home/{{ user }}/bin/terraform_{{ latest_tf }}
+    command: mv {{ temp_directory.path }}/terraform /home/{{ user }}/bin/terraform_{{ latest_tf }}
+  
+  - name: TF latest ({{ latest_tf }}) - Create a symlink 'terraform' to 'terraform_{{ latest_tf }}'
+    become: yes
+    become_user: "{{ user }}"
+    file:
+      src: /home/{{ user }}/bin/terraform_{{ latest_tf }}
+      dest: /home/{{ user }}/bin/terraform
+      state: link
+  
+  when: current_tf.stdout != latest_tf
