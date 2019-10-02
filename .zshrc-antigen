@@ -1,0 +1,55 @@
+source ~/.antigenrc
+
+# Syntax highlighting bundle
+antigen bundle zsh-users/zsh-syntax-highlighting
+
+# Tell Antigen that youre done.
+antigen apply
+
+export PATH=/usr/local/bin:$HOME/bin:$HOME/.local/bin:$PATH
+export EDITOR="emacs"
+export TF_PLUGIN_CACHE_DIR="$HOME/.terraform.d/plugin-cache"
+
+alias tf_0.11.14="rm -f ~/bin/terraform; ln -s ~/bin/terraform_0.11.14 ~/bin/terraform; terraform --version;"
+alias tf_latest="rm -f ~/bin/terraform && ln -s ~/bin/terraform_0.12.9 ~/bin/terraform; terraform --version;"
+alias vault_1.2.2="rm -f ~/bin/vault; ln -s ~/bin/vault_1.2.2 ~/bin/vault; vault --version;"
+alias vault_latest="rm -f ~/bin/vault; ln -s ~/bin/vault_1.2.3 ~/bin/vault; vault --version;"
+# alias cat=#pygmentize -g"
+
+alias python="/usr/bin/python3"
+alias pip=:"~/.local/bin/pip3"
+alias samlapi="~/bin/samlapi"
+
+# https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html
+alias unsetaws="unset \
+AWS_ACCESS_KEY_ID \
+AWS_SECRET_ACCESS_KEY \
+AWS_SESSION_TOKEN \
+AWS_DEFAULT_REGION \
+AWS_DEFAULT_OUTPUT \
+AWS_PROFILE \
+AWS_CA_BUNDLE \
+AWS_SHARED_CREDENTIALS_FILE \
+AWS_CONFIG_FILE;"
+
+alias sts='unsetaws; \
+account_id=<ACCOUNT_ID>; \
+STS=`aws sts assume-role --role-arn arn:aws:iam::"$account_id":role/Administrator --role-session-name apineau`; \
+export AWS_ACCESS_KEY_ID=`echo $STS | jq -r .Credentials.AccessKeyId`; \
+export AWS_SECRET_ACCESS_KEY=`echo $STS | jq -r .Credentials.SecretAccessKey`; \
+export AWS_SESSION_TOKEN=`echo $STS | jq -r .Credentials.SessionToken`; \
+aws sts get-caller-identity;'
+
+alias stspci='unsetaws; \
+python ~/git/cloud/aws-tools/assume-role-cli-mfa/arcm.py; \
+export AWS_PROFILE=default-ah-pci-role; \
+aws sts get-caller-identity;'
+
+# https://github.com/AlDanial/cloc#quick-start-
+alias clocrecurcive='for d in ./*/ ; do (cd "$d" && echo "$d" && cloc --vcs git); done;'
+
+eval `ssh-agent`
+
+autoload -U +X bashcompinit && bashcompinit
+source /etc/bash_completion.d/azure-cli
+complete -o nospace -C /home/roger/bin/vault vault
